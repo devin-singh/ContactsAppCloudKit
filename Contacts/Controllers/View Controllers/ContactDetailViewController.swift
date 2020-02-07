@@ -12,7 +12,12 @@ class ContactDetailViewController: UIViewController {
     
     // MARK: - Properties
     
-    
+    var contact: Contact? {
+        didSet {
+            loadViewIfNeeded()
+            self.updateViews()
+        }
+    }
     
     // MARK: - Outlets
     
@@ -26,18 +31,49 @@ class ContactDetailViewController: UIViewController {
         super.viewDidLoad()
     }
     
+    // MARK: - Private functions
+    
+    private func updateViews() {
+        guard let contact = contact else { return }
+        nameTextField.text = contact.name
+        phoneNumberTextField.text = contact.phoneNumber
+        emailTextField.text = contact.email
+    }
+    
+    private func popCurrentVC() {
+        DispatchQueue.main.async {
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
+    
     // MARK: - Actions
     
     @IBAction func saveButtonPressed(_ sender: Any) {
         guard let name = nameTextField.text, !name.isEmpty else { return }
-        ContactController.shared.saveContact(withName: name, phoneNumber: phoneNumberTextField.text, email: emailTextField.text) { (result) in
-            switch result {
-            case .success(let contact):
-                ContactController.shared.contacts.insert(contact, at: 0)
-            case .failure(let error):
-                print(error.errorDescription ?? error.localizedDescription)
+        
+        if let contact = self.contact {
+            contact.name = name
+            contact.email = emailTextField.text
+            contact.phoneNumber = phoneNumberTextField.text
+            
+            ContactController.shared.update(contact) { (result) in
+                switch result {
+                case .success(_):
+                    self.popCurrentVC()
+                case .failure(let error):
+                    print(error.errorDescription ?? error.localizedDescription)
+                }
+            }
+        } else {
+            ContactController.shared.saveContact(withName: name, phoneNumber: phoneNumberTextField.text, email: emailTextField.text) { (result) in
+                switch result {
+                case .success(let contact):
+                    ContactController.shared.contacts.insert(contact, at: 0)
+                    self.popCurrentVC()
+                case .failure(let error):
+                    print(error.errorDescription ?? error.localizedDescription)
+                }
             }
         }
-        navigationController?.popViewController(animated: true)
     }
 }

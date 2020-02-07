@@ -85,5 +85,12 @@ class ContactListTableViewController: UITableViewController {
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toUpdateVC" {
+            guard let indexPath = tableView.indexPathForSelectedRow ,let destinationVC = segue.destination as? ContactDetailViewController else { return }
+            
+            let contactToSend = ContactController.shared.contacts[indexPath.row]
+            
+            destinationVC.contact = contactToSend
+        }
     }
 }
