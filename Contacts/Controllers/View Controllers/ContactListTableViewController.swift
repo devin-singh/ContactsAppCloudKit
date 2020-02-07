@@ -60,14 +60,26 @@ class ContactListTableViewController: UITableViewController {
         return cell
     }
     
-    
-//    // Override to support editing the table view.
-//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        if editingStyle == .delete {
-//            // Delete the row from the data source
-//            tableView.deleteRows(at: [indexPath], with: .fade)
-//        }
-//    }
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let contactToDelete = ContactController.shared.contacts[indexPath.row]
+            guard let index = ContactController.shared.contacts.firstIndex(of: contactToDelete) else { return }
+            
+            ContactController.shared.delete(contactToDelete) { (result) in
+                switch result {
+                case .success(let success):
+                    if success {
+                        ContactController.shared.contacts.remove(at: index)
+                        DispatchQueue.main.async {
+                            tableView.deleteRows(at: [indexPath], with: .fade)
+                        }
+                    }
+                case .failure(let error):
+                    print(error.errorDescription ?? error.localizedDescription)
+                }
+            }
+        }
+    }
     
     // MARK: - Navigation
     

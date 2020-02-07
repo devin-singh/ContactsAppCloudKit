@@ -62,3 +62,9 @@ extension CKRecord {
         }
     }
 }
+
+extension Contact: Equatable {
+    static func == (lhs: Contact, rhs: Contact) -> Bool {
+        return lhs.recordID == rhs.recordID
+    }
+}

@@ -59,7 +59,24 @@ class ContactController {
         }
     }
     
-    func delete(_ contact: Contact, completion: @escaping (Result<Bool, HypeError>) -> Void) {
+    func delete(_ contact: Contact, completion: @escaping (Result<Bool, ContactError>) -> Void) {
         
+        let operation = CKModifyRecordsOperation(recordsToSave: nil, recordIDsToDelete: [contact.recordID])
+        
+        operation.savePolicy = .changedKeys
+        operation.qualityOfService = .userInteractive
+        
+        operation.modifyRecordsCompletionBlock = { records, _, error in
+            if let error = error {
+                return completion(.failure(.ckError(error)))
+            }
+            
+            if records?.count == 0 {
+                completion(.success(true))
+            }else {
+                return completion(.failure(.unexpectedRecordsFound))
+            }
+        }
+        privateDB.add(operation)
     }
 }
