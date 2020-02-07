@@ -18,6 +18,7 @@
 		655DFBB023EDCA46006E6FB9 /* ContactError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655DFBAF23EDCA46006E6FB9 /* ContactError.swift */; };
 		655DFBB223EDCD25006E6FB9 /* ContactListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655DFBB123EDCD25006E6FB9 /* ContactListTableViewController.swift */; };
 		655DFBB423EDD184006E6FB9 /* ContactDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655DFBB323EDD184006E6FB9 /* ContactDetailViewController.swift */; };
+		655DFBB723EDE109006E6FB9 /* SearchableRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655DFBB623EDE109006E6FB9 /* SearchableRecord.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		655DFBAF23EDCA46006E6FB9 /* ContactError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactError.swift; sourceTree = "<group>"; };
 		655DFBB123EDCD25006E6FB9 /* ContactListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListTableViewController.swift; sourceTree = "<group>"; };
 		655DFBB323EDD184006E6FB9 /* ContactDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailViewController.swift; sourceTree = "<group>"; };
+		655DFBB623EDE109006E6FB9 /* SearchableRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchableRecord.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +129,7 @@
 		655DFBA523EDC366006E6FB9 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				655DFBB523EDE0FA006E6FB9 /* Protocols */,
 				655DFBAE23EDCA2A006E6FB9 /* Helpers */,
 				655DFBA623EDC36F006E6FB9 /* Contact.swift */,
 			);
@@ -147,6 +150,14 @@
 				655DFBAF23EDCA46006E6FB9 /* ContactError.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		655DFBB523EDE0FA006E6FB9 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				655DFBB623EDE109006E6FB9 /* SearchableRecord.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -222,6 +233,7 @@
 			files = (
 				655DFBB223EDCD25006E6FB9 /* ContactListTableViewController.swift in Sources */,
 				655DFBA723EDC36F006E6FB9 /* Contact.swift in Sources */,
+				655DFBB723EDE109006E6FB9 /* SearchableRecord.swift in Sources */,
 				655DFBAD23EDC824006E6FB9 /* ContactController.swift in Sources */,
 				655DFBB423EDD184006E6FB9 /* ContactDetailViewController.swift in Sources */,
 				655DFB8D23EDC27D006E6FB9 /* AppDelegate.swift in Sources */,

@@ -68,3 +68,16 @@ extension Contact: Equatable {
         return lhs.recordID == rhs.recordID
     }
 }
+
+extension Contact: SearchableRecord {
+    func matches(searchTerm: String) -> Bool {
+        if name.lowercased().contains(searchTerm.lowercased()) {
+            return true
+        } else if phoneNumber?.lowercased().contains(searchTerm.lowercased()) ?? false {
+            return true
+        } else if email?.lowercased().contains(searchTerm.lowercased()) ?? false {
+            return true
+        }
+        return false
+    }
+}
