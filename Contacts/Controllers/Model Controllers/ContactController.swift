@@ -103,4 +103,40 @@ class ContactController {
         }
         privateDB.add(operation)
     }
+    
+    // MARK: - Local Persistance
+    
+    func createFileForPersistence() -> URL {
+         // Grab the users Document directory
+         let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+         // Create the new fileURL on the users Phone
+          let fileUrl = urls[0].appendingPathComponent("Contacts.json")
+          return fileUrl
+      }
+    
+    func saveToPersistantStore() {
+        // Create an instance of JSONEncoder
+        let jsonEncoder = JSONEncoder()
+        // Attempt to convert our playlist array into JSON
+        // Anytime a method throws, it must be placed in a do, try, catch block
+        do {
+            let jsonEntries = try jsonEncoder.encode(contacts)
+            // With the new JSON(d) playlist arraay, save it to the users device
+            try jsonEntries.write(to: createFileForPersistence())
+        } catch let encodingError {
+            print("There was an error saving the data! \(encodingError)")
+        }
+    }
+    
+    func loadFromPersistentStorage() {
+        let jsonDecoder = JSONDecoder()
+        do {
+            let jsonData = try Data(contentsOf: createFileForPersistence())
+            let decodedContacts = try jsonDecoder.decode([Contact].self, from: jsonData)
+            contacts = decodedContacts
+        } catch let decodingError {
+            print("Error loading data \(decodingError)")
+        }
+    }
+    
 }

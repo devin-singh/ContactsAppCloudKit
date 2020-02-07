@@ -59,6 +59,7 @@ class ContactDetailViewController: UIViewController {
             ContactController.shared.update(contact) { (result) in
                 switch result {
                 case .success(_):
+                    ContactController.shared.saveToPersistantStore()
                     self.popCurrentVC()
                 case .failure(let error):
                     print(error.errorDescription ?? error.localizedDescription)
@@ -69,6 +70,7 @@ class ContactDetailViewController: UIViewController {
                 switch result {
                 case .success(let contact):
                     ContactController.shared.contacts.insert(contact, at: 0)
+                    ContactController.shared.saveToPersistantStore()
                     self.popCurrentVC()
                 case .failure(let error):
                     print(error.errorDescription ?? error.localizedDescription)

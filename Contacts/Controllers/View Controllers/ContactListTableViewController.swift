@@ -26,6 +26,8 @@ class ContactListTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.contactListSearchBar.delegate = self
+        ContactController.shared.loadFromPersistentStorage()
+        self.updateViews()
         self.loadData()
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -46,6 +48,7 @@ class ContactListTableViewController: UITableViewController {
             switch result {
             case .success(let contacts):
                 ContactController.shared.contacts = contacts
+                ContactController.shared.saveToPersistantStore()
                 self.updateViews()
             case .failure(let error):
                 print(error.errorDescription ?? error.localizedDescription)
@@ -82,6 +85,7 @@ class ContactListTableViewController: UITableViewController {
                 case .success(let success):
                     if success {
                         ContactController.shared.contacts.remove(at: index)
+                        ContactController.shared.saveToPersistantStore()
                         DispatchQueue.main.async {
                             tableView.deleteRows(at: [indexPath], with: .fade)
                         }

@@ -17,12 +17,16 @@ struct ContactStrings {
 }
 
 
-class Contact {
+class Contact: Codable {
     
     var name: String
     var phoneNumber: String?
     var email: String?
-    var recordID: CKRecord.ID
+    var recordID: CKRecord.ID = CKRecord.ID(recordName: UUID().uuidString)
+    
+    private enum CodingKeys: String, CodingKey {
+        case name, phoneNumber, email
+    }
     
     init(name: String, phoneNumber: String?, email: String?, recordID: CKRecord.ID = CKRecord.ID(recordName: UUID().uuidString)) {
         
